@@ -27,17 +27,14 @@ function handleFormCancel() {
 
 <template>
   <q-layout view="lHh Lpr lFf">
-    <!-- HEADER / TOP BAR -->
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
         <q-toolbar-title> Pet Sitting App </q-toolbar-title>
 
         <q-space />
 
-        <!-- "+" button to open pet form dialog -->
         <q-btn flat round dense icon="add" aria-label="Add pet" @click="openCreatePetDialog" />
 
-        <!-- Dark / light toggle -->
         <q-btn
           flat
           round
@@ -49,12 +46,10 @@ function handleFormCancel() {
       </q-toolbar>
     </q-header>
 
-    <!-- MAIN CONTENT -->
     <q-page-container class="app-page-container">
       <RouterView />
     </q-page-container>
 
-    <!-- DIALOG FOR CREATING A PET (placeholder for now) -->
     <q-dialog v-model="showCreatePetDialog">
       <q-card class="q-pa-md" style="min-width: 380px; max-width: 480px">
         <PetForm mode="create" @success="handleFormSuccess" @cancel="handleFormCancel" />
@@ -63,11 +58,4 @@ function handleFormCancel() {
   </q-layout>
 </template>
 
-<style>
-html,
-body,
-#app {
-  height: 100%;
-  margin: 0;
-}
-</style>
+

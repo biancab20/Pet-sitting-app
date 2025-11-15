@@ -10,7 +10,7 @@ const props = defineProps({
   },
   pet: {
     type: Object,
-    default: null, // used later for edit
+    default: null,
   },
 })
 
@@ -19,17 +19,24 @@ const emit = defineEmits(['success', 'cancel'])
 const $q = useQuasar()
 const petsStore = usePetsStore()
 
-// Form state
 const name = ref('')
 const breed = ref('')
 const size = ref(null)
 const birthdate = ref('')
 
-// Loading & error
 const submitLoading = ref(false)
 const formError = computed(() => petsStore.formError)
 
-// Pre-fill when editing (we'll use this later)
+const today = new Date().toISOString().slice(0, 10)
+
+function resetForm() {
+  name.value = ''
+  breed.value = ''
+  size.value = null
+  birthdate.value = ''
+}
+
+// Fill form when editing / reset when creating
 watch(
   () => props.pet,
   (pet) => {
@@ -45,11 +52,8 @@ watch(
   { immediate: true },
 )
 
-function resetForm() {
-  name.value = ''
-  breed.value = ''
-  size.value = null
-  birthdate.value = ''
+function isFuture(dateStr) {
+  return dateStr > today
 }
 
 async function handleSubmit() {
@@ -84,13 +88,6 @@ async function handleSubmit() {
 function handleCancel() {
   emit('cancel')
 }
-
-function isFuture(dateStr) {
-  const today = new Date().toISOString().slice(0, 10) // YYYY-MM-DD
-  return dateStr > today
-}
-
-const today = new Date().toISOString().slice(0, 10)
 </script>
 
 <template>
@@ -125,7 +122,6 @@ const today = new Date().toISOString().slice(0, 10)
       label="Birthdate"
       filled
       mask="####-##-##"
-      :options="date => date <= today"
       hint="YYYY-MM-DD"
       :rules="[
         (val) => !!val || 'Birthdate is required',
@@ -135,7 +131,7 @@ const today = new Date().toISOString().slice(0, 10)
       <template #prepend>
         <q-icon name="event" class="cursor-pointer">
           <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-            <q-date v-model="birthdate" mask="YYYY-MM-DD" />
+            <q-date v-model="birthdate" mask="YYYY-MM-DD" :options="(date) => date <= today" />
           </q-popup-proxy>
         </q-icon>
       </template>
