@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.database import Base, engine, SessionLocal
 from app import models
 from app.routes.pet_routes import router as pets_router
+from app.routes.appointment_routes import router as appointments_router
 from app.seed import seed_data
 
 app = FastAPI(title="Pet Sitting API")
@@ -36,3 +37,4 @@ def health():
 
 # Register pet routes
 app.include_router(pets_router)
+app.include_router(appointments_router)
