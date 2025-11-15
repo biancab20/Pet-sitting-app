@@ -1,5 +1,5 @@
 from datetime import date, datetime
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from typing import Optional, Literal
 
 
@@ -12,6 +12,11 @@ class PetBase(BaseModel):
     size: PetSizeLiteral
     birthdate: date
 
+    @field_validator("birthdate")
+    def no_future_birthdate(cls, value):
+        if value > date.today():
+            raise ValueError("Birthdate cannot be in the future")
+        return value
 
 class PetCreate(PetBase):
     pass

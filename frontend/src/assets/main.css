@@ -26,27 +26,26 @@ a,
     display: flex;
     place-items: center;
   }
-
   #app {
     display: grid;
     grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
   }
+}
 
-  /* Light mode background for the main content */
-  .app-page-container {
-    min-height: 100vh;
-  }
+/* Light mode background for the main content */
+.app-page-container {
+  min-height: 100vh;
+}
 
-  body {
-    background: #e7e8d1;
-  }
+body {
+  background: #e7e8d1;
+}
 
-  .app-layout {
-    color: #2b2c28;
-  }
+.app-layout {
+  color: #2b2c28;
+}
 
-  body.body--dark .app-layout {
-    color: #e7e8d1;
-  }
+body.body--dark .app-layout {
+  color: #e7e8d1;
 }
