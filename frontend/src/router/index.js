@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import PetsView from '@/components/PetsView.vue'
+import PetsView from '@/views/PetsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

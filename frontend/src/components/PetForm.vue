@@ -27,8 +27,6 @@ const birthdate = ref('')
 const submitLoading = ref(false)
 const formError = computed(() => petsStore.formError)
 
-const today = new Date().toISOString().slice(0, 10)
-
 function resetForm() {
   name.value = ''
   breed.value = ''
@@ -52,7 +50,13 @@ watch(
   { immediate: true },
 )
 
+const today = new Date().toISOString().slice(0, 10).replace(/-/g, '/')
+
+function dateOptions(date) {
+    return date<=today;
+}
 function isFuture(dateStr) {
+  const today = new Date().toISOString().slice(0, 10) // YYYY-MM-DD
   return dateStr > today
 }
 
@@ -131,7 +135,7 @@ function handleCancel() {
       <template #prepend>
         <q-icon name="event" class="cursor-pointer">
           <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-            <q-date v-model="birthdate" mask="YYYY-MM-DD" :options="(date) => date <= today" />
+            <q-date v-model="birthdate" mask="YYYY-MM-DD" :options="dateOptions"/>
           </q-popup-proxy>
         </q-icon>
       </template>

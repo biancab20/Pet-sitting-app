@@ -71,7 +71,7 @@ onMounted(() => {
 
     <!-- Card grid -->
     <div v-else class="row q-col-gutter-lg q-mt-md">
-      <div v-for="pet in pets" :key="pet.id" class="col-12 col-sm-6 col-md-4">
+      <div v-for="pet in pets" :key="pet.id" class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
         <q-card class="pet-card full-height q-pa-sm">
           <!-- Header section -->
           <q-card-section class="row items-start justify-between">
