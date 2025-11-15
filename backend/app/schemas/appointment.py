@@ -12,13 +12,7 @@ class AppointmentBase(BaseModel):
 
 
 class AppointmentCreate(AppointmentBase):
-    @field_validator("date")
-    @classmethod
-    def date_cannot_be_in_past(cls, value: date) -> date:
-        from datetime import date as _date
-        if value < _date.today():
-            raise ValueError("Appointment date cannot be in the past")
-        return value
+    pass
 
 
 class AppointmentOut(AppointmentBase):

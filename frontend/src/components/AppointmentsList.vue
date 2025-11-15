@@ -46,6 +46,33 @@ async function handleDelete(appt) {
 function handleScheduleClick() {
   emit('schedule')
 }
+
+function toDateTime(appt) {
+  // appt.date: "YYYY-MM-DD"
+  // appt.start_time: "HH:MM:SS" or "HH:MM"
+  const [y, m, d] = appt.date.split('-').map(Number)
+  const timeParts = appt.start_time ? appt.start_time.split(':').map(Number) : [0, 0, 0]
+  const [hh = 0, mm = 0, ss = 0] = timeParts
+  return new Date(y, m - 1, d, hh, mm, ss)
+}
+
+function isUpcoming(appt, now) {
+  return toDateTime(appt) >= now
+}
+
+const upcomingAppointments = computed(() => {
+  const now = new Date()
+  return [...appointments.value]
+    .filter((a) => isUpcoming(a, now))
+    .sort((a, b) => toDateTime(a) - toDateTime(b))
+})
+
+const pastAppointments = computed(() => {
+  const now = new Date()
+  return [...appointments.value]
+    .filter((a) => !isUpcoming(a, now))
+    .sort((a, b) => toDateTime(b) - toDateTime(a)) // newest past first
+})
 </script>
 
 <template>
@@ -80,10 +107,35 @@ function handleScheduleClick() {
     </div>
 
     <div v-else>
-      <q-card class="appointments-card q-pa-md q-mt-sm">
+      <!-- Upcoming -->
+      <q-card v-if="upcomingAppointments.length" class="appointments-card q-pa-md q-mt-sm">
         <div class="text-subtitle1 q-mb-sm">Upcoming appointments</div>
         <q-list separator>
-          <q-item v-for="appt in appointments" :key="appt.id">
+          <q-item v-for="appt in upcomingAppointments" :key="appt.id">
+            <q-item-section>
+              <q-item-label class="text-body1">
+                <strong>{{ petNameFor(appt) }}</strong>
+                <span class="text-caption text-grey-7">
+                  &nbsp;• {{ appt.date }} at {{ appt.start_time }}
+                </span>
+              </q-item-label>
+              <q-item-label caption>
+                Sitter: {{ appt.sitter_name }} — {{ appt.duration_minutes }} min
+              </q-item-label>
+            </q-item-section>
+
+            <q-item-section side top>
+              <q-btn dense round flat icon="delete" color="negative" @click="handleDelete(appt)" />
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-card>
+
+      <!-- Past -->
+      <q-card v-if="pastAppointments.length" class="appointments-card q-pa-md q-mt-md">
+        <div class="text-subtitle1 q-mb-sm">Past appointments</div>
+        <q-list separator>
+          <q-item v-for="appt in pastAppointments" :key="appt.id">
             <q-item-section>
               <q-item-label class="text-body1">
                 <strong>{{ petNameFor(appt) }}</strong>
