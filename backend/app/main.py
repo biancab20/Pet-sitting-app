@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+from app.database import Base, engine, SessionLocal
+from app import models
 from app.routes.pet_routes import router as pets_router
+from app.seed import seed_data
 
 app = FastAPI(title="Pet Sitting API")
 
-# CORS so frontend can talk to backend
 origins = [
     "http://localhost:5173", 
 ]
@@ -18,11 +19,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+Base.metadata.create_all(bind=engine)
+
+# --- Run seed on startup ---
+@app.on_event("startup")
+def startup_event():
+  db = SessionLocal()
+  try:
+      seed_data(db)
+  finally:
+      db.close()
 
 @app.get("/health")
 def health():
     return {"status": "ok"}
-
 
 # Register pet routes
 app.include_router(pets_router)
