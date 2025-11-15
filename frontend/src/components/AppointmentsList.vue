@@ -3,6 +3,7 @@ import { onMounted, computed } from 'vue'
 import { useAppointmentsStore } from '@/stores/appointments'
 import { usePetsStore } from '@/stores/pets'
 import { useQuasar } from 'quasar'
+import { toDateTime, isUpcoming } from '@/utils/appointments'
 
 const appointmentsStore = useAppointmentsStore()
 const petsStore = usePetsStore()
@@ -45,19 +46,6 @@ async function handleDelete(appt) {
 
 function handleScheduleClick() {
   emit('schedule')
-}
-
-function toDateTime(appt) {
-  // appt.date: "YYYY-MM-DD"
-  // appt.start_time: "HH:MM:SS" or "HH:MM"
-  const [y, m, d] = appt.date.split('-').map(Number)
-  const timeParts = appt.start_time ? appt.start_time.split(':').map(Number) : [0, 0, 0]
-  const [hh = 0, mm = 0, ss = 0] = timeParts
-  return new Date(y, m - 1, d, hh, mm, ss)
-}
-
-function isUpcoming(appt, now) {
-  return toDateTime(appt) >= now
 }
 
 const upcomingAppointments = computed(() => {
