@@ -1,12 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI(title="Pet Sitting API (Skeleton)")
+from app.routes.pet_routes import router as pets_router
 
-# CORS – allow frontend to talk to backend in dev
+app = FastAPI(title="Pet Sitting API")
+
+# CORS so frontend can talk to backend
 origins = [
-    "http://localhost:9000",  # Quasar dev default
-    "http://localhost:5173",  # Vite default, just in case
+    "http://localhost:5173", 
 ]
 
 app.add_middleware(
@@ -19,5 +20,9 @@ app.add_middleware(
 
 
 @app.get("/health")
-def health_check():
+def health():
     return {"status": "ok"}
+
+
+# Register pet routes
+app.include_router(pets_router)
