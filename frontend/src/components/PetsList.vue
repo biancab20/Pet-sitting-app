@@ -10,10 +10,14 @@ const pets = computed(() => petsStore.pets)
 const loading = computed(() => petsStore.loading)
 const error = computed(() => petsStore.error)
 
-const emit = defineEmits(['edit'])
+const emit = defineEmits(['edit', 'appointment'])
 
 function handleEdit(pet) {
   emit('edit', pet)
+}
+
+function handleMakeAppointment(pet) {
+  emit('appointment', pet)
 }
 
 function handleDelete(pet) {
@@ -27,7 +31,7 @@ function handleDelete(pet) {
       await petsStore.deletePet(pet.id)
       $q.notify({ type: 'positive', message: 'Pet deleted' })
     } catch (err) {
-        console.error(err)
+      console.error(err)
       $q.notify({
         type: 'negative',
         message: petsStore.error || 'Failed to delete pet',
@@ -82,10 +86,15 @@ onMounted(() => {
 
             <q-btn flat round dense icon="more_vert">
               <q-menu auto-close>
-                <q-list style="min-width: 130px">
+                <q-list style="min-width: 150px">
                   <q-item clickable @click="handleEdit(pet)">
                     <q-item-section avatar><q-icon name="edit" /></q-item-section>
                     <q-item-section>Edit</q-item-section>
+                  </q-item>
+
+                  <q-item clickable @click="handleMakeAppointment(pet)">
+                    <q-item-section avatar><q-icon name="event" /></q-item-section>
+                    <q-item-section>Make appointment</q-item-section>
                   </q-item>
 
                   <q-item clickable @click="handleDelete(pet)">
