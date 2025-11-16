@@ -10,13 +10,17 @@ def seed_data(db: Session):
         print("🌱 Seeding initial pets...")
 
         pets = [
-            Pet(name="Bella", breed="Labrador Retriever", size="large", birthdate=date(2018, 6, 12)),
-            Pet(name="Milo", breed="Beagle", size="medium", birthdate=date(2020, 2, 8)),
-            Pet(name="Luna", breed="Pomeranian", size="small", birthdate=date(2021, 10, 22)),
-            Pet(name="Rex", breed="German Shepherd", size="large", birthdate=date(2024, 2, 18)),
-            Pet(name="Daisy", breed="Beagle", size="medium", birthdate=date(2021, 2, 8)),
-            Pet(name="Lucy", breed="Border Collie", size="medium", birthdate=date(2023, 12, 22)),
-            Pet(name="Oliver", breed="Harrier", size="small", birthdate=date(2025, 2, 8)),
+            Pet(name="Bella", breed="Labrador Retriever", size="large", birthdate=date(2018, 6, 12), pet_type="dog", image_url="https://www.dogbreedslist.info/uploads/dog-pictures/labrador-retriever-3.jpg" ),
+            Pet(name="Milo", breed="Beagle", size="medium", birthdate=date(2020, 2, 8), pet_type="dog", image_url="https://www.dogbreedslist.info/uploads/dog-pictures/beagle-2-2.jpg"),
+            Pet(name="Luna", breed="Pomeranian", size="small", birthdate=date(2021, 10, 22), pet_type="dog", image_url="https://www.dogbreedslist.info/uploads/dog-pictures/pomeranian-2.jpg"),
+            Pet(name="Rex", breed="German Shepherd", size="large", birthdate=date(2024, 2, 18), pet_type="dog"),
+            Pet(name="Daisy", breed="Beagle", size="medium", birthdate=date(2021, 2, 8), pet_type="dog", image_url="https://www.dogbreedslist.info/uploads/dog-pictures/pomeranian-2.jpg"),
+            Pet(name="Lucy", breed="Border Collie", size="medium", birthdate=date(2023, 12, 22), pet_type="dog", image_url="https://www.dogbreedslist.info/uploads/dog-pictures/border-collie-2.jpg"),
+            Pet(name="Oliver", breed="Harrier", size="small", birthdate=date(2025, 2, 8), pet_type="dog"),
+
+            Pet(name="Bailey", breed="Main Coon", size="small", birthdate=date(2023, 12, 22), pet_type="cat", image_url="https://cats.com/wp-content/uploads/2020/10/Maine-Coon-cat-compressed-1-768x420.jpg"),
+            Pet(name="Tubby", breed="Scottish Fold", size="small", birthdate=date(2024, 2, 18), pet_type="cat"),
+            Pet(name="Peppermint", breed="Snowshoe", size="large", birthdate=date(2021, 8, 18), pet_type="cat", image_url="https://cats.com/wp-content/uploads/2020/10/Snowshoe-cat-compressed-768x420.jpg"),
         ]
 
         db.add_all(pets)

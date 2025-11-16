@@ -77,6 +77,20 @@ onMounted(() => {
     <div v-else class="row q-col-gutter-lg q-mt-md">
       <div v-for="pet in pets" :key="pet.id" class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
         <q-card class="pet-card full-height q-pa-sm">
+          <!-- Image section -->
+          <q-img
+            v-if="pet.image_url"
+            :src="pet.image_url"
+            :ratio="16 / 9"
+            class="pet-card__image q-mb-sm"
+            spinner-color="primary"
+          >
+          </q-img>
+
+          <div v-else class="pet-card__placeholder q-mb-sm column items-center justify-center">
+            <q-icon name="pets" size="32px" class="q-mb-xs" />
+            <div class="text-caption">No image</div>
+          </div>
           <!-- Header section -->
           <q-card-section class="row items-start justify-between">
             <div>
@@ -111,6 +125,17 @@ onMounted(() => {
           <!-- Body section -->
           <q-card-section>
             <div class="q-mb-sm">
+              <q-chip
+                size="sm"
+                icon="category"
+                outline
+                color="primary"
+                text-color="primary"
+                v-if="pet.pet_type"
+              >
+                {{ pet.pet_type }}
+              </q-chip>
+
               <q-chip size="sm" icon="pets" outline color="secondary" text-color="secondary">
                 {{ pet.size }}
               </q-chip>
@@ -151,10 +176,22 @@ onMounted(() => {
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
 }
 
-/* 🔥 Dark mode override – Quasar adds body.body--dark */
 body.body--dark .pet-card {
-  background: #3a3c35; /* dark, slightly green-tinted */
-  border-color: #a7beae; /* keep green accent */
+  background: #3a3c35;
+  border-color: #a7beae;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+
+.pet-card__image {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.pet-card__placeholder {
+  height: 140px;
+  border-radius: 12px;
+  background: rgba(184, 80, 66, 0.08); /* #B85042-ish */
+  color: #b85042;
+  border: 1px dashed rgba(184, 80, 66, 0.6);
 }
 </style>

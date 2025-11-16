@@ -34,6 +34,7 @@ vi.mock('quasar', () => {
     QMenu: stub('QMenu'),
     QList: stub('QList'),
     QItem: stub('QItem'),
+    QImg: stub('QImg'),
     QItemSection: stub('QItemSection'),
   }
 })

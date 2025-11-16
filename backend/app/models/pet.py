@@ -10,6 +10,12 @@ class PetSize(str, enum.Enum):
     medium = "medium"
     large = "large"
 
+class PetType(str, enum.Enum):
+    dog = "dog"
+    cat = "cat"
+    rabbit = "rabbit"
+    other = "other"
+
 
 class Pet(Base):
     __tablename__ = "pets"
@@ -19,6 +25,9 @@ class Pet(Base):
     breed = Column(String(100), nullable=False)
     size = Column(Enum(PetSize), nullable=False)
     birthdate = Column(Date, nullable=False)
+
+    image_url = Column(String(255), nullable=True)
+    pet_type = Column(Enum(PetType), nullable=True)
 
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     updated_at = Column(

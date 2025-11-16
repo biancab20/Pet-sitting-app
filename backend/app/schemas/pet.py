@@ -1,9 +1,10 @@
 from datetime import date, datetime
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, HttpUrl
 from typing import Optional, Literal
 
 
 PetSizeLiteral = Literal["small", "medium", "large"]
+PetTypeLiteral = Literal["dog", "cat", "rabbit", "other"]
 
 
 class PetBase(BaseModel):
@@ -11,6 +12,9 @@ class PetBase(BaseModel):
     breed: str = Field(..., min_length=1, max_length=100)
     size: PetSizeLiteral
     birthdate: date
+
+    pet_type: Optional[PetTypeLiteral] = None
+    image_url: Optional[HttpUrl] = None
 
     @field_validator("birthdate")
     def no_future_birthdate(cls, value):
@@ -27,6 +31,9 @@ class PetUpdate(BaseModel):
     breed: Optional[str] = Field(None, min_length=1, max_length=100)
     size: Optional[PetSizeLiteral] = None
     birthdate: Optional[date] = None
+
+    pet_type: Optional[PetTypeLiteral] = None
+    image_url: Optional[HttpUrl] = None
 
 
 class PetOut(PetBase):
