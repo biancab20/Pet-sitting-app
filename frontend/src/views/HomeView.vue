@@ -4,6 +4,7 @@ import PetsList from '@/components/PetsList.vue'
 import PetForm from '@/components/PetForm.vue'
 import AppointmentForm from '@/components/AppointmentForm.vue'
 import AppointmentsList from '@/components/AppointmentsList.vue'
+import HeroInvite from '@/components/HeroInvite.vue'
 
 const selectedPet = ref(null)
 const showEditPetDialog = ref(false)
@@ -45,10 +46,20 @@ function handleAppointmentCancel() {
   showAppointmentDialog.value = false
   selectedPetForAppointment.value = null
 }
+
+function handleBrowsePets() {
+  const el = document.getElementById('pets-section')
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+}
 </script>
 
 <template>
   <q-page class="q-pa-lg full-width">
+
+    <HeroInvite @browse="handleBrowsePets" />
+    
     <PetsList @edit="handleEdit" @appointment="handleAppointment" />
 
     <!-- Edit Pet Dialog -->

@@ -6,7 +6,7 @@ import { useQuasar } from 'quasar'
 const props = defineProps({
   mode: {
     type: String,
-    default: 'create', // 'create' | 'edit'
+    default: 'create', 
   },
   pet: {
     type: Object,
@@ -34,8 +34,8 @@ function resetForm() {
   breed.value = ''
   size.value = null
   birthdate.value = ''
-  petType.value = ref(null)
-  imageUrl.value = ref('')
+  petType.value = null
+  imageUrl.value = ''
 }
 
 // Fill form when editing / reset when creating
